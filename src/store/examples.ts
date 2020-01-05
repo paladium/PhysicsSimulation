@@ -23,3 +23,13 @@ export const drawTriangle = <InlineEditorModel>{
 });
 canvas.add(triangle);`
 };
+
+export const drawText = <InlineEditorModel>{
+    title: "Drawing text",
+    description: "Let`s use the fabric.Text command to draw a text",
+    code: `var text = new fabric.Text('Hello everyone', {
+    left: 100,
+    top: 100
+});
+canvas.add(text);`
+};

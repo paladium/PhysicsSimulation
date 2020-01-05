@@ -3,7 +3,7 @@
         <md-app-toolbar class="md-primary">
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
-                    <span class="md-title">Physics learning</span>
+                    <router-link to="/" class="md-title">Physics learning</router-link>
                 </div>
             </div>
         </md-app-toolbar>
@@ -19,7 +19,7 @@
                     <span class="md-list-item-text">Basic shapes</span>
                 </md-list-item>
 
-                <md-list-item>
+                <md-list-item @click="openPage('texts')">
                     <md-icon>text_format</md-icon>
                     <span class="md-list-item-text">Text</span>
                 </md-list-item>
