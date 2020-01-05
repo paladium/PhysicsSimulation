@@ -1,8 +1,8 @@
 <template>
     <div class="text">
-        <h1>1. We will explore basic shapes</h1>
-        <p class="md-body-2">You can use simple commands to draw the shapes. First let`s explore the drawing of circles and triangles.</p>
-        <p class="md-body-2">Try changing the example below to a different color</p>
+        <h1>1. We will explore drawing text</h1>
+        <p class="md-body-2">Now let`s see how we can use the text command to draw different texts..</p>
+        <p class="md-body-2">Try changing the example below to a different color and text</p>
         <inline-editor :model="demos.drawText"></inline-editor>
     </div>
 </template>

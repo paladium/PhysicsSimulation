@@ -29,7 +29,43 @@ export const drawText = <InlineEditorModel>{
     description: "Let`s use the fabric.Text command to draw a text",
     code: `var text = new fabric.Text('Hello everyone', {
     left: 100,
-    top: 100
+    top: 100,
+    fill: "black"
 });
 canvas.add(text);`
+};
+
+export const simpleAnimation = <InlineEditorModel>{
+    title: "Simple animation",
+    description: "Let`s use the fabric.animate command to animate any object",
+    code: `var triangle = new fabric.Triangle({
+        width: 50,
+        height: 50,
+        fill: "red",
+        left: 100,
+        top: 100
+    });
+triangle.animate('left', '+=100', {
+    onChange: canvas.renderAll.bind(canvas)
+});
+canvas.add(triangle);`
+};
+
+export const simpleAnimationCombined = <InlineEditorModel>{
+    title: "Simple animation",
+    description: "Let`s use the fabric.animate command to animate any object",
+    code: `var triangle = new fabric.Triangle({
+        width: 50,
+        height: 50,
+        fill: "red",
+        left: 100,
+        top: 100
+    });
+triangle.animate('left', '+=100', {
+    onChange: canvas.renderAll.bind(canvas)
+});
+triangle.animate('angle', '+=360', {
+    onChange: canvas.renderAll.bind(canvas)
+});
+canvas.add(triangle);`
 };

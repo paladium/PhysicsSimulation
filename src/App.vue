@@ -26,7 +26,7 @@
 
                 <md-subheader>Animation</md-subheader>
 
-                <md-list-item>
+                <md-list-item @click="openPage('simple-animation')">
                     <md-icon>linear_scale</md-icon>
                     <span class="md-list-item-text">Simple animation</span>
                 </md-list-item>
