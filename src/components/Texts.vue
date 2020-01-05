@@ -14,7 +14,7 @@ import {drawText} from '@/store/examples'
 @Component({
     components: {InlineEditor}
 })
-export default class BasicShapes extends Vue
+export default class Texts extends Vue
 {
     demos = {
         drawText,

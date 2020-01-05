@@ -31,7 +31,7 @@
                     <span class="md-list-item-text">Simple animation</span>
                 </md-list-item>
 
-                <md-list-item>
+                <md-list-item @click="openPage('physical-animation')">
                     <md-icon>gesture</md-icon>
                     <span class="md-list-item-text">Physical animation</span>
                 </md-list-item>

@@ -9,22 +9,24 @@
         <div v-if="activePage == 'simple-animation'">
             <simple-animation></simple-animation>
         </div>
+        <div v-if="activePage == 'physical-animation'">
+            <physical-animation></physical-animation>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import BasicShapes from '@/components/BasicShapes.vue'
-import Texts from '@/components/Texts.vue'
-import SimpleAnimation from '@/components/SimpleAnimation.vue'
+import BasicShapes from "@/components/BasicShapes.vue";
+import Texts from "@/components/Texts.vue";
+import SimpleAnimation from "@/components/SimpleAnimation.vue";
+import PhysicalAnimation from "@/components/PhysicalAnimation.vue";
 @Component({
-    components: {BasicShapes, Texts, SimpleAnimation}
+    components: { BasicShapes, Texts, SimpleAnimation, PhysicalAnimation }
 })
 export default class Docs extends Vue {
-    
-    get activePage()
-    {
-        return this.$route.params['page'];
+    get activePage() {
+        return this.$route.params["page"];
     }
 }
 </script>

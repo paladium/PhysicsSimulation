@@ -69,3 +69,73 @@ triangle.animate('angle', '+=360', {
 });
 canvas.add(triangle);`
 };
+
+export const physicalAnimation = <InlineEditorModel>{
+    title: "Physical animation",
+    description: "Let`s use the awesome library to make a physical animation",
+    code: `var circle = new fabric.Circle({
+        radius: 10,
+        fill: "red",
+        left: 100,
+        top: 100
+    });
+
+canvas.add(circle);
+
+var line = new fabric.Line([0, 0, 100, 0],{
+    fill: 'red',
+    stroke: 'red',
+    strokeWidth: 5,
+});
+canvas.add(line);
+var world = new p2.World({
+    gravity:[0, -9.82]
+});
+
+// Create an empty dynamic body
+var circleBody = new p2.Body({
+    mass: 5,
+    position: [0, 10]
+});
+
+// Add a circle shape to the body
+var circleShape = new p2.Circle({ radius: 1 });
+circleBody.addShape(circleShape);
+
+// Add a plane
+let planeShape = new p2.Plane();
+let planeBody = new p2.Body();
+planeBody.addShape(planeShape);
+world.addBody(planeBody);
+
+// ...and add the body to the world.
+// If we don't add it to the world, it won't be simulated.
+world.addBody(circleBody);
+var fixedTimeStep = 1 / 60; // seconds
+var maxSubSteps = 10; // Max sub steps to catch up with the wall clock
+var lastTime;
+
+// Animation loop
+function animate(time){
+	requestAnimationFrame(animate);
+
+    // Compute elapsed time since last render frame
+    var deltaTime = lastTime ? (time - lastTime) / 1000 : 0;
+
+    // Move bodies forward in time
+    world.step(fixedTimeStep, deltaTime, maxSubSteps);
+
+    // Render the circle at the current interpolated position
+    circle.set('left', circleBody.interpolatedPosition[0]);
+    circle.set('top', 300-circleBody.interpolatedPosition[1]);
+    circle.set('angle', circleBody.angle);
+
+    line.set('top', 300-planeBody.position[1]);
+
+    canvas.renderAll.bind(canvas);
+    lastTime = time;
+}
+
+// Start the animation loop
+requestAnimationFrame(animate);`
+};

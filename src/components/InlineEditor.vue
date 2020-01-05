@@ -27,6 +27,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { InlineEditorModel } from "@/models/editor";
 import MonacoEditor from "monaco-editor-vue";
 import { fabric } from "fabric";
+import p2 from 'p2'
 
 @Component({
     components: { MonacoEditor }
@@ -40,10 +41,10 @@ export default class InlineEditor extends Vue {
     runCode(value: string) {
         this.canvas.clear();
         try {
-            const code = new Function("canvas", value);
-            code(this.canvas);
+            const code = new Function("canvas", "p2", value);
+            code(this.canvas, p2);
         } catch (e) {
-            console.log("Some error");
+            console.log("Some error", e);
         }
     }
     mounted() {

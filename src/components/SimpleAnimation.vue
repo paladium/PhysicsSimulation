@@ -17,7 +17,7 @@ import {simpleAnimation, simpleAnimationCombined} from '@/store/examples'
 @Component({
     components: {InlineEditor}
 })
-export default class BasicShapes extends Vue
+export default class SimpleAnimation extends Vue
 {
     demos = {
         simpleAnimation,
