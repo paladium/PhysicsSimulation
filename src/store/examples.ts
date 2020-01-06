@@ -6,8 +6,8 @@ export const drawCircle = <InlineEditorModel>{
     code: `var circle = new fabric.Circle({
     radius: 20,
     fill: "green",
-    left: 100,
-    top: 100
+    left: 0,
+    top: 0
 });
 canvas.add(circle);`
 };
@@ -18,8 +18,8 @@ export const drawTriangle = <InlineEditorModel>{
     width: 50,
     height: 50,
     fill: "red",
-    left: 100,
-    top: 100
+    left: 0,
+    top: 0
 });
 canvas.add(triangle);`
 };
@@ -28,8 +28,8 @@ export const drawText = <InlineEditorModel>{
     title: "Drawing text",
     description: "Let`s use the fabric.Text command to draw a text",
     code: `var text = new fabric.Text('Hello everyone', {
-    left: 100,
-    top: 100,
+    left: -100,
+    top: 0,
     fill: "black"
 });
 canvas.add(text);`
@@ -42,10 +42,10 @@ export const simpleAnimation = <InlineEditorModel>{
         width: 50,
         height: 50,
         fill: "red",
-        left: 100,
-        top: 100
+        left: 0,
+        top: 0
     });
-triangle.animate('left', '+=100', {
+triangle.animate('left', '+=50', {
     onChange: canvas.renderAll.bind(canvas)
 });
 canvas.add(triangle);`
@@ -58,10 +58,10 @@ export const simpleAnimationCombined = <InlineEditorModel>{
         width: 50,
         height: 50,
         fill: "red",
-        left: 100,
-        top: 100
+        left: 0,
+        top: 0
     });
-triangle.animate('left', '+=100', {
+triangle.animate('left', '+=50', {
     onChange: canvas.renderAll.bind(canvas)
 });
 triangle.animate('angle', '+=360', {
