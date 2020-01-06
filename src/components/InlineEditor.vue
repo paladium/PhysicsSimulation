@@ -24,7 +24,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { InlineEditorModel } from "@/models/editor";
+import { InlineEditorModel, PhysicalObject } from "@/models/editor";
 import MonacoEditor from "monaco-editor-vue";
 import { fabric } from "fabric";
 import p2 from "p2";
@@ -41,8 +41,8 @@ export default class InlineEditor extends Vue {
     runCode(value: string) {
         this.canvas.clear();
         try {
-            const code = new Function("canvas", "p2", "simulate", value);
-            code(this.canvas, p2, this.simulate);
+            const code = new Function("canvas", "p2", "PhysicalObject", "simulate", value);
+            code(this.canvas, p2, PhysicalObject, this.simulate);
         } catch (e) {
             console.log("Some error", e);
         }
@@ -63,7 +63,7 @@ export default class InlineEditor extends Vue {
         this.runCode(this.model.code);
     }
 
-    private simulate(world: p2.World, canvas: fabric.Canvas, ...objs: {physicalObject: p2.Body, renderer: fabric.Object}[]) {
+    private simulate(world: p2.World, canvas: fabric.Canvas, ...objs: PhysicalObject[]) {
         var fixedTimeStep = 1 / 30; // seconds
         var maxSubSteps = 10; // Max sub steps to catch up with the wall clock
         var lastTime = 0;
@@ -85,11 +85,7 @@ export default class InlineEditor extends Vue {
             // Render the circle at the current interpolated position
 
             objs.forEach((obj) => {
-                obj.renderer.set({
-                    left: obj.physicalObject.position[0],
-                    top: -obj.physicalObject.position[1],
-                    angle: obj.physicalObject.angle
-                });
+                obj.step();
             });
             canvas.requestRenderAll();
             lastTime = time;

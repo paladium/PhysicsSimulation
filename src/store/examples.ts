@@ -75,12 +75,10 @@ export const physicalAnimation = <InlineEditorModel>{
     description: "Let`s use the awesome library to make a physical animation",
     code: `var circle = new fabric.Circle({
         radius: 10,
-        fill: "red",
+        fill: "blue",
         left: 0,
         top: 100
     });
-    circle.flipY = true;
-
 canvas.add(circle);
 
 var line = new fabric.Line([-200, 0, 200, 0],{
@@ -88,7 +86,6 @@ var line = new fabric.Line([-200, 0, 200, 0],{
     stroke: 'red',
     strokeWidth: 5,
 });
-line.flipY = true;
 canvas.add(line);
 var world = new p2.World({
     gravity:[0, -9.82]
@@ -116,12 +113,6 @@ let planeBody = new p2.Body({
 planeBody.addShape(planeShape);
 world.addBody(planeBody);
 
-simulate(world, canvas, {
-    physicalObject: circleBody,
-    renderer: circle
-}, {
-    physicalObject: planeBody,
-    renderer: line
-});
+simulate(world, canvas, new PhysicalObject(circle, circleBody), new PhysicalObject(line, planeBody));
 `
 };
