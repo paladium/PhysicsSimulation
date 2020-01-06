@@ -120,35 +120,52 @@ simulate(world, canvas, new PhysicalObject(circle, circleBody), new PhysicalObje
 export const solarSystem = <InlineEditorModel>{
     title: "Solar system",
     description: "A starter project for solar system",
+    height: 800,
     code: `
-var planets = 9;
+var planets = 5;
+var allPlanets = [];
+var colors = ['red', 'green', 'blue', 'yellow'];
 for(var i=0;i<planets;i++)
 {
     var planet = new fabric.Circle({
         radius: 10,
         left: i * 30,
         top: 0,
-        fill: 'red',
+        fill: colors[fabric.util.getRandomInt(0, colors.length - 1)],
         hasControls: false,
         lockMovementX: true,
-        lockMovementY: true,  
+        lockMovementY: true,
+        index: i,
     });
+    
     canvas.add(planet);
+    allPlanets.push(planet);
+}
+for(var i=0;i<allPlanets.length;i++)
+{
     const startAngle = fabric.util.getRandomInt(-180, 0);
     const endAngle = startAngle + 359;
-    fabric.util.animate({
-        startValue: startAngle,
-        endValue: endAngle,
-        duration: 5000,
-        onChange: (angle) => {
-            angle = fabric.util.degreesToRadians(angle);
-            var x = planet.radius * Math.cos(angle);
-            var y = planet.radius * Math.sin(angle);
+    const planet = allPlanets[i];
 
-            planet.set({ left: x, top: y }).setCoords();
-            canvas.renderAll();
-        }
-    });
+    const duration = 2000 * (i + 1);
+
+    const animate = () => {
+        fabric.util.animate({
+            startValue: startAngle,
+            endValue: endAngle,
+            duration: duration,
+            easing: function(t, b, c, d) { return c*t/d + b; },
+            onChange: (angle) => {
+                angle = fabric.util.degreesToRadians(angle);
+                var x = (i * 30) * Math.cos(angle);
+                var y = (i * 30) * Math.sin(angle);
+                planet.set({ left: x, top: y });
+                canvas.renderAll();
+            },
+            onComplete: animate
+        });
+    };
+    animate();
 }
     `
 };

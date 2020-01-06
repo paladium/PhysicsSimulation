@@ -8,7 +8,7 @@
             <div class="md-layout md-gutter">
                 <div class="md-layout-item md-size-50">
                     <MonacoEditor
-                        height="400"
+                        :height="model.height || 400"
                         theme="vs-dark"
                         language="javascript"
                         :value="model.code"
@@ -50,7 +50,7 @@ export default class InlineEditor extends Vue {
     mounted() {
         const canvasObject = this.$refs.canvas as HTMLCanvasElement;
         this.canvas = new fabric.Canvas(canvasObject);
-        this.canvas.setHeight(400);
+        this.canvas.setHeight(this.model.height || 400);
         this.canvas.setWidth(400);
         this.canvas.setViewportTransform([
             1,

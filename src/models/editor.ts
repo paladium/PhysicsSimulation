@@ -5,6 +5,7 @@ export interface InlineEditorModel
     title: string;
     description: string;
     code: string;
+    height?: number;
 }
 
 export class PhysicalObject
