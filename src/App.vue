@@ -37,7 +37,7 @@
                 </md-list-item>
 
                 <md-subheader>Final project</md-subheader>
-                <md-list-item>
+                <md-list-item @click="openPage('project-summary')">
                     <md-icon>forum</md-icon>
                     <span class="md-list-item-text">Final project summary</span>
                 </md-list-item>
