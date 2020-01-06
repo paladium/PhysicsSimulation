@@ -1,5 +1,8 @@
 <template>
     <div class="home">
+        <div class="submit-area" style="text-align: right; padding-right: 5px;">
+            <md-button class="md-raised md-primary">Submit</md-button>
+        </div>
         <inline-editor :model="activeDemo"></inline-editor>
     </div>
 </template>
@@ -16,9 +19,8 @@ import { solarSystem } from "@/store/examples";
 export default class ProjectEditorView extends Vue {
     activeDemo = solarSystem;
     mounted() {
-        const page = this.$route.params['starter'];
-        if(page == 'solar-system')
-        {
+        const page = this.$route.params["starter"];
+        if (page == "solar-system") {
             this.activeDemo = solarSystem;
         }
     }
