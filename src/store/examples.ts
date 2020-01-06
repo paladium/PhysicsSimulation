@@ -116,3 +116,39 @@ world.addBody(planeBody);
 simulate(world, canvas, new PhysicalObject(circle, circleBody), new PhysicalObject(line, planeBody));
 `
 };
+
+export const solarSystem = <InlineEditorModel>{
+    title: "Solar system",
+    description: "A starter project for solar system",
+    code: `
+var planets = 9;
+for(var i=0;i<planets;i++)
+{
+    var planet = new fabric.Circle({
+        radius: 10,
+        left: i * 30,
+        top: 0,
+        fill: 'red',
+        hasControls: false,
+        lockMovementX: true,
+        lockMovementY: true,  
+    });
+    canvas.add(planet);
+    const startAngle = fabric.util.getRandomInt(-180, 0);
+    const endAngle = startAngle + 359;
+    fabric.util.animate({
+        startValue: startAngle,
+        endValue: endAngle,
+        duration: 5000,
+        onChange: (angle) => {
+            angle = fabric.util.degreesToRadians(angle);
+            var x = planet.radius * Math.cos(angle);
+            var y = planet.radius * Math.sin(angle);
+
+            planet.set({ left: x, top: y }).setCoords();
+            canvas.renderAll();
+        }
+    });
+}
+    `
+};

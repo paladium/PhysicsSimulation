@@ -41,7 +41,7 @@
                     <md-icon>forum</md-icon>
                     <span class="md-list-item-text">Final project summary</span>
                 </md-list-item>
-                <md-list-item>
+                <md-list-item to="/editor">
                     <md-icon>toys</md-icon>
                     <span class="md-list-item-text">Your project</span>
                 </md-list-item>

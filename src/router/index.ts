@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Docs from '@/views/Docs.vue'
 import Welcome from '@/views/Welcome.vue'
 
+import ProjectEditorView from '@/views/ProjectEditor.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,6 +18,11 @@ const routes = [
         name: 'docs',
         component: Docs
     },
+    {
+        path: '/editor/:starter?',
+        name: 'editor',
+        component: ProjectEditorView
+    }
 ]
 
 const router = new VueRouter({

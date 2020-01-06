@@ -12,7 +12,7 @@
         <div v-if="activePage == 'physical-animation'">
             <physical-animation></physical-animation>
         </div>
-         <div v-if="activePage == 'project-summary'">
+        <div v-if="activePage == 'project-summary'">
             <project-summary></project-summary>
         </div>
     </div>
@@ -24,10 +24,16 @@ import BasicShapes from "@/components/BasicShapes.vue";
 import Texts from "@/components/Texts.vue";
 import SimpleAnimation from "@/components/SimpleAnimation.vue";
 import PhysicalAnimation from "@/components/PhysicalAnimation.vue";
-import ProjectSummary from '@/components/ProjectSummary.vue'
+import ProjectSummary from "@/components/ProjectSummary.vue";
 
 @Component({
-    components: { BasicShapes, Texts, SimpleAnimation, PhysicalAnimation, ProjectSummary }
+    components: {
+        BasicShapes,
+        Texts,
+        SimpleAnimation,
+        PhysicalAnimation,
+        ProjectSummary
+    }
 })
 export default class Docs extends Vue {
     get activePage() {
