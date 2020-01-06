@@ -76,17 +76,19 @@ export const physicalAnimation = <InlineEditorModel>{
     code: `var circle = new fabric.Circle({
         radius: 10,
         fill: "red",
-        left: 100,
+        left: 0,
         top: 100
     });
+    circle.flipY = true;
 
 canvas.add(circle);
 
-var line = new fabric.Line([0, 0, 100, 0],{
+var line = new fabric.Line([-200, 0, 200, 0],{
     fill: 'red',
     stroke: 'red',
     strokeWidth: 5,
 });
+line.flipY = true;
 canvas.add(line);
 var world = new p2.World({
     gravity:[0, -9.82]
@@ -95,28 +97,36 @@ var world = new p2.World({
 // Create an empty dynamic body
 var circleBody = new p2.Body({
     mass: 5,
-    position: [0, 10]
+    position: [0, 100]
 });
 
 // Add a circle shape to the body
-var circleShape = new p2.Circle({ radius: 1 });
+var circleShape = new p2.Circle({ radius: 10 });
 circleBody.addShape(circleShape);
-
-// Add a plane
-let planeShape = new p2.Plane();
-let planeBody = new p2.Body();
-planeBody.addShape(planeShape);
-world.addBody(planeBody);
 
 // ...and add the body to the world.
 // If we don't add it to the world, it won't be simulated.
 world.addBody(circleBody);
-var fixedTimeStep = 1 / 60; // seconds
+
+// Add a plane
+let planeShape = new p2.Plane();
+let planeBody = new p2.Body({
+    position: [0, 0]
+});
+planeBody.addShape(planeShape);
+world.addBody(planeBody);
+
+var fixedTimeStep = 1 / 30; // seconds
 var maxSubSteps = 10; // Max sub steps to catch up with the wall clock
 var lastTime;
-
+var currentTime = 0;
+var maxSteps = 5000;
+var currentSteps = 0;
 // Animation loop
 function animate(time){
+    currentSteps++;
+    if(currentSteps > maxSteps)
+        return;
 	requestAnimationFrame(animate);
 
     // Compute elapsed time since last render frame
@@ -126,16 +136,17 @@ function animate(time){
     world.step(fixedTimeStep, deltaTime, maxSubSteps);
 
     // Render the circle at the current interpolated position
-    circle.set('left', circleBody.interpolatedPosition[0]);
-    circle.set('top', 300-circleBody.interpolatedPosition[1]);
+    circle.set('left', circleBody.position[0]);
+    circle.set('top', -circleBody.position[1]);
     circle.set('angle', circleBody.angle);
 
-    line.set('top', 300-planeBody.position[1]);
+    line.set('top', -planeBody.position[1]);
+    line.set('left', planeBody.position[0]);
 
-    canvas.renderAll.bind(canvas);
+    canvas.requestRenderAll();
     lastTime = time;
 }
-
 // Start the animation loop
-requestAnimationFrame(animate);`
+requestAnimationFrame(animate);
+`
 };

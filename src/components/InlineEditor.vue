@@ -52,6 +52,7 @@ export default class InlineEditor extends Vue {
         this.canvas = new fabric.Canvas(canvasObject);
         this.canvas.setHeight(400);
         this.canvas.setWidth(400);
+        this.canvas.setViewportTransform([1, 0, 0, 1, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2]);
         this.runCode(this.model.code);
     }
 }
