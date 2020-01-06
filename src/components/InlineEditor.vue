@@ -27,7 +27,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { InlineEditorModel } from "@/models/editor";
 import MonacoEditor from "monaco-editor-vue";
 import { fabric } from "fabric";
-import p2 from 'p2'
+import p2 from "p2";
 
 @Component({
     components: { MonacoEditor }
@@ -41,8 +41,8 @@ export default class InlineEditor extends Vue {
     runCode(value: string) {
         this.canvas.clear();
         try {
-            const code = new Function("canvas", "p2", value);
-            code(this.canvas, p2);
+            const code = new Function("canvas", "p2", "simulate", value);
+            code(this.canvas, p2, this.simulate);
         } catch (e) {
             console.log("Some error", e);
         }
@@ -52,8 +52,50 @@ export default class InlineEditor extends Vue {
         this.canvas = new fabric.Canvas(canvasObject);
         this.canvas.setHeight(400);
         this.canvas.setWidth(400);
-        this.canvas.setViewportTransform([1, 0, 0, 1, this.canvas.getWidth() / 2, this.canvas.getHeight() / 2]);
+        this.canvas.setViewportTransform([
+            1,
+            0,
+            0,
+            1,
+            this.canvas.getWidth() / 2,
+            this.canvas.getHeight() / 2
+        ]);
         this.runCode(this.model.code);
+    }
+
+    private simulate(world: p2.World, canvas: fabric.Canvas, ...objs: {physicalObject: p2.Body, renderer: fabric.Object}[]) {
+        var fixedTimeStep = 1 / 30; // seconds
+        var maxSubSteps = 10; // Max sub steps to catch up with the wall clock
+        var lastTime = 0;
+        var currentTime = 0;
+        var maxSteps = 5000;
+        var currentSteps = 0;
+        // Animation loop
+        const animate = (time: number) =>{
+            currentSteps++;
+            if (currentSteps > maxSteps) return;
+            requestAnimationFrame(animate);
+
+            // Compute elapsed time since last render frame
+            var deltaTime = lastTime ? (time - lastTime) / 1000 : 0;
+
+            // Move bodies forward in time
+            world.step(fixedTimeStep, deltaTime, maxSubSteps);
+
+            // Render the circle at the current interpolated position
+
+            objs.forEach((obj) => {
+                obj.renderer.set({
+                    left: obj.physicalObject.position[0],
+                    top: -obj.physicalObject.position[1],
+                    angle: obj.physicalObject.angle
+                });
+            });
+            canvas.requestRenderAll();
+            lastTime = time;
+        }
+        // Start the animation loop
+        requestAnimationFrame(animate);
     }
 }
 </script>

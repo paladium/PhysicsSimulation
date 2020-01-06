@@ -116,37 +116,12 @@ let planeBody = new p2.Body({
 planeBody.addShape(planeShape);
 world.addBody(planeBody);
 
-var fixedTimeStep = 1 / 30; // seconds
-var maxSubSteps = 10; // Max sub steps to catch up with the wall clock
-var lastTime;
-var currentTime = 0;
-var maxSteps = 5000;
-var currentSteps = 0;
-// Animation loop
-function animate(time){
-    currentSteps++;
-    if(currentSteps > maxSteps)
-        return;
-	requestAnimationFrame(animate);
-
-    // Compute elapsed time since last render frame
-    var deltaTime = lastTime ? (time - lastTime) / 1000 : 0;
-
-    // Move bodies forward in time
-    world.step(fixedTimeStep, deltaTime, maxSubSteps);
-
-    // Render the circle at the current interpolated position
-    circle.set('left', circleBody.position[0]);
-    circle.set('top', -circleBody.position[1]);
-    circle.set('angle', circleBody.angle);
-
-    line.set('top', -planeBody.position[1]);
-    line.set('left', planeBody.position[0]);
-
-    canvas.requestRenderAll();
-    lastTime = time;
-}
-// Start the animation loop
-requestAnimationFrame(animate);
+simulate(world, canvas, {
+    physicalObject: circleBody,
+    renderer: circle
+}, {
+    physicalObject: planeBody,
+    renderer: line
+});
 `
 };
