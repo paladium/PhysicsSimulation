@@ -98,7 +98,7 @@ var circleBody = new p2.Body({
 });
 
 // Add a circle shape to the body
-var circleShape = new p2.Circle({ radius: 10 });
+var circleShape = new p2.Circle({ radius: 20 });
 circleBody.addShape(circleShape);
 
 // ...and add the body to the world.
@@ -108,7 +108,7 @@ world.addBody(circleBody);
 // Add a plane
 let planeShape = new p2.Plane();
 let planeBody = new p2.Body({
-    position: [0, 0]
+    position: [-200, 0]
 });
 planeBody.addShape(planeShape);
 world.addBody(planeBody);

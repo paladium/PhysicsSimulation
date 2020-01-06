@@ -64,7 +64,7 @@ export default class InlineEditor extends Vue {
     }
 
     private simulate(world: p2.World, canvas: fabric.Canvas, ...objs: PhysicalObject[]) {
-        var fixedTimeStep = 1 / 30; // seconds
+        var fixedTimeStep = 1 / 60; // seconds
         var maxSubSteps = 10; // Max sub steps to catch up with the wall clock
         var lastTime = 0;
         var currentTime = 0;
